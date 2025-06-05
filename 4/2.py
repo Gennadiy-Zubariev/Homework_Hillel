@@ -5,5 +5,5 @@
 # l = [6]
 l = []
 
-otw = sum(l[::2]) * l[-1] if l else l
+otw = sum(l[::2]) * l[-1] if l else 0
 print(otw)
