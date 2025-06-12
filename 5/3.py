@@ -11,6 +11,6 @@ for i in pun:
     if i in hashtag:
         hashtag = hashtag.replace(i, ' ')
 hashtag = hashtag.title().replace(' ', '')
-print(hashtag)
+
 
 print(f'#{hashtag[:139]}')
