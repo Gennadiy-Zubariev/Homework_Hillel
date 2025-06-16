@@ -4,9 +4,9 @@
 # "a-A" -> abcdefghijklmnopqrstuvwxyzA
 
 import string
-
-a = input('Enter a: ')
-b = input('Enter b: ')
+x = input('Enter a-b: ')
+a = x[0]
+b = x[2]
 let = string.ascii_letters
 if let.index(a) > let.index(b):
     a, b = b, a

@@ -20,3 +20,13 @@ else:
         lst_1 = lst[:int(num_elem // 2 + 1)]
         lst_2 = lst[int(num_elem // 2 + 1):]
         print(lst_1, lst_2)
+
+
+input_list = [56, 78, 20]
+
+mid = (len(input_list) + 1) // 2
+
+first_half = input_list[:mid]
+second_half = input_list[mid:]
+
+print(input_list, "=>", [first_half, second_half])
