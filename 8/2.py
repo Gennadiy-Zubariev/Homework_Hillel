@@ -5,8 +5,7 @@ def is_palindrome(text):
     """palindrome"""
     punkt = string.punctuation + ' '
     format_tex = ''.join(i for i in text.lower() if i not in punkt)
-    rev_tex = format_tex[::-1]
-    if format_tex != rev_tex:
+    if format_tex != format_tex[::-1]:
         return False
     else:
         return True

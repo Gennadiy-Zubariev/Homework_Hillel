@@ -10,8 +10,7 @@ def find_unique_value(some_list):
         for k, v in res_dict.items():
             if v == 1:
                 return k
-    else:
-        return
+
 
 
 assert find_unique_value([1, 2, 1, 1]) == 2, 'Test1'
