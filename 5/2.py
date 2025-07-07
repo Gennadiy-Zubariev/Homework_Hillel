@@ -31,5 +31,5 @@ while True:
             print('Wrong operant')
     stop = input(f'For exit enter anything. \n'
                  f'If you want calculated more, enter "y": ')
-    if stop.lower() != 'y':
+    if stop.lower() != 'y' or 'yes':
         break
