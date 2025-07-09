@@ -30,12 +30,7 @@ class Group:
         self.group.add(student)
 
     def delete_student(self, last_name):
-        for stud in self.group:
-            if stud.last_name == last_name:
-                self.group.discard(stud)
-                break
-        else:
-            print('There is no such person in the group')
+        self.group.discard(Group.find_student(self, last_name))
 
     def find_student(self, last_name):
         for stud in self.group:
