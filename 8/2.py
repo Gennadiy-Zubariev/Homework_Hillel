@@ -5,10 +5,7 @@ def is_palindrome(text):
     """palindrome"""
     punkt = string.punctuation + ' '
     format_tex = ''.join(i for i in text.lower() if i not in punkt)
-    if format_tex != format_tex[::-1]:
-        return False
-    else:
-        return True
+    return format_tex == format_tex[::-1]
 
 
 assert is_palindrome('A man, a plan, a canal: Panama') == True, 'Test1'
