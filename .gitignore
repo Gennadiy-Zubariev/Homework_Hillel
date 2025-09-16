@@ -1,2 +1,20 @@
-.main/
+# Віртуальні середовища
+venv/
+env/
+.venv/
+
+# PyCharm
 .idea/
+
+# Python кеші та байткод
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Лог-файли
+*.log
+
+# Системні файли
+.DS_Store
+Thumbs.db
