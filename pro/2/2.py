@@ -81,10 +81,10 @@ def combining_sets(s1, s2):
 # Створіть функцію, яка перевіряє, чи є одна множина підмножиною іншої.
 
 def subset(s1, s2):
-    if s1.subset(s2):
-        return f'{s1} subset {s2}'
-    elif s1.issubset(s2):
-        return f'{s1} issubset {s2}'
+    if s1.issubset(s2):
+        return f'{s1} is subset {s2}'
+    elif s1.issuperset(s2):
+        return f'{s1} is superset {s2}'
     else:
         return f'{s1} and {s2} is different sets'
 
@@ -98,4 +98,4 @@ def even_odd(num):
 
 def even_list(lst):
     return [i for i in lst if i % 2 == 0]
-    # or list(lst, lambda i: i % 2 == 0) (не розумію як краще:))
+    # or list(filter(lambda i: i % 2 == 0, lst)) (не розумію як краще:))
