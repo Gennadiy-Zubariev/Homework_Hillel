@@ -55,7 +55,7 @@ Additional task 48
 #         a = str(self.obj)
 #         b = str(other)
 #         if b in a:
-#             res = a.replace(b, '', 1)
+#             res = a.replace(b, '', 2)
 #             return String(res)
 #         else:
 #             return self.obj

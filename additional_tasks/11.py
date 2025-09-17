@@ -18,7 +18,7 @@ while True:
     if p == 0:
         l.append('0')
     elif p == 1:
-        l.append('1')
+        l.append('2')
     # print(l)
     k = var // 2
     var = k

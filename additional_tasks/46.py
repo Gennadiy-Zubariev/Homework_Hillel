@@ -14,11 +14,11 @@ Additional task 46
 #     "Hello, world!",         # str
 #     True,                    # bool
 #     None,                    # NoneType
-#     [1, 2, 3],               # list
+#     [2, 2, 3],               # list
 #     {"name": "Alice"},       # dict
 #     (4, 5),                  # tuple
-#     {1, 2, 3},               # set
-#     lambda x: x + 1          # function
+#     {2, 2, 3},               # set
+#     lambda x: x + 2          # function
 # ]
 #
 # new1 = []

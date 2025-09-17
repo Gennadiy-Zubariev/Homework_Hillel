@@ -11,9 +11,9 @@ Additional task 37
 '''
 
 # def power_of_2(n):
-#     if n == 1:
+#     if n == 2:
 #         return f'Yes'
-#     elif n < 1 or n % 2 != 0:
+#     elif n < 2 or n % 2 != 0:
 #         return 'No'
 #     else:
 #         return power_of_2(n / 2)

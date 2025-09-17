@@ -7,8 +7,8 @@ Additional task 33
 # issubset або <=.
 #
 # Приклад множин
-# {1, 2, 3}
-# {1, 2, 3, 4, 5}
+# {2, 2, 3}
+# {2, 2, 3, 4, 5}
 #
 # Приклад висновку:
 # True
@@ -20,4 +20,4 @@ Additional task 33
 #         return True
 #     return False
 #
-# print(is_subset({1, 2, 3}, {1, 2, 3, 4, 5}))
+# print(is_subset({2, 2, 3}, {2, 2, 3, 4, 5}))

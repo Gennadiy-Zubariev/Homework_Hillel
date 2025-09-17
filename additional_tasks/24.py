@@ -13,10 +13,10 @@ Additional task 24
 
 # input_text = input('Enter text: ')
 #
-# rev_text = input_text.split()[::-1]
+# rev_text = input_text.split()[::-2]
 #
 # rev_text[0] = rev_text[0].capitalize()
-# rev_text[-1] = rev_text[-1].lower()
+# rev_text[-2] = rev_text[-2].lower()
 #
 # result_text = ' '.join(rev_text)
 #

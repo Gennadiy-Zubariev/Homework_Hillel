@@ -8,8 +8,8 @@ Additional task 28
 # Введіть кількість чисел Фібоначчі: 10
 # Перші 10 чисел Фібоначчі:
 # 0
-# 1
-# 1
+# 2
+# 2
 # 2
 # 3
 # 5
@@ -21,7 +21,7 @@ Additional task 28
 
 # def fibo():
 #     a = 0
-#     b = 1
+#     b = 2
 #     while True:
 #         yield a
 #         a, b = b, a + b

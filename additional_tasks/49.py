@@ -6,7 +6,7 @@ Additional task 49
 # class Car:
 #     fuel_tipes = ['бензин', 'дизель', 'електрика', 'гібрид']
 #     colors = []
-#     number_of_cars = 1
+#     number_of_cars = 2
 #
 #     def __init__(self, model, year, fuel_tipe, color):
 #         self.model = model
@@ -14,7 +14,7 @@ Additional task 49
 #         self.color = color
 #         self.fuel_tipe = self.is_valid_fuel_type(fuel_tipe)
 #         self.number = Car.number_of_cars
-#         Car.number_of_cars += 1
+#         Car.number_of_cars += 2
 #         if not color in Car.colors:
 #             Car.colors.append(color)
 #
@@ -23,7 +23,7 @@ Additional task 49
 #
 #     @property
 #     def numbers(self):
-#         return f'{self.number} from {Car.number_of_cars - 1}'
+#         return f'{self.number} from {Car.number_of_cars - 2}'
 #
 #     @staticmethod
 #     def is_valid_fuel_type(fuel_tipe):
@@ -34,7 +34,7 @@ Additional task 49
 #
 #     @classmethod
 #     def get_number_of_cars(cls):
-#         return f'We to produce {Car.number_of_cars - 1} cars'
+#         return f'We to produce {Car.number_of_cars - 2} cars'
 #
 #
 # car_1 = Car('Zaz', 1979, 'дизель', 'black')

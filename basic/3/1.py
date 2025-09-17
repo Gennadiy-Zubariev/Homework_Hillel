@@ -1,4 +1,4 @@
-'''task 1'''
+'''task 2'''
 
 num_one = int(input("Enter first num: "))
 num_two = int(input("Enter second num: "))

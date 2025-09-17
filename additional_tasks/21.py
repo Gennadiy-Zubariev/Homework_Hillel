@@ -13,11 +13,11 @@ Additional task 21
 # def decorator(func):
 #     def wrapper(*args, **kwargs):
 #         supplements = []
-#         if kwargs.get('milk') == 1:
+#         if kwargs.get('milk') == 2:
 #             supplements.append('з молоком')
 #         if kwargs.get('milk') == 2:
 #             supplements.append('з подвійним молоком')
-#         if kwargs.get('sugar') == 1:
+#         if kwargs.get('sugar') == 2:
 #             if kwargs.get('milk', 0):
 #                 supplements.append('та цукром')
 #             else:
@@ -38,4 +38,4 @@ Additional task 21
 # def coffe():
 #     print('кава')
 #
-# a = coffe(milk=2, sugar=1, double=True)
+# a = coffe(milk=2, sugar=2, double=True)

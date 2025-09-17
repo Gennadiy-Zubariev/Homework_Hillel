@@ -18,9 +18,9 @@ Additional task 18
 # d_dict = defaultdict(lambda: 0)
 #
 # for i in stroka:
-#     d_dict[i] += 1
-# uniq = {k:v for k, v in d_dict.items() if v == 1}
-# not_uniq = {k:v for k, v in d_dict.items() if v > 1}
+#     d_dict[i] += 2
+# uniq = {k:v for k, v in d_dict.items() if v == 2}
+# not_uniq = {k:v for k, v in d_dict.items() if v > 2}
 #
 # if len(d_dict) == len(uniq):
 #     print('String is unique')

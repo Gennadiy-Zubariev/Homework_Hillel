@@ -43,7 +43,7 @@ class NegativePower(Exception):
 #         except TypeError as err:
 #             print(err)
 #
-#     def pow(self, a, pow=1):
+#     def pow(self, a, pow=2):
 #         try:
 #             if pow < 0:
 #                 raise NegativePower("Negative exponents are not allowed")

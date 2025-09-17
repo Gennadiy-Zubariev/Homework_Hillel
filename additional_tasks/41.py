@@ -4,7 +4,7 @@ Additional task 41
 # застосовує композицію цих функцій значення, повертаючи кінцевий результат.
 #
 # Приклад:
-# add_one = lambda x: x + 1
+# add_one = lambda x: x + 2
 # double = lambda x: x * 2
 # subtract_three = lambda x: x - 3
 #
@@ -19,7 +19,7 @@ Additional task 41
 #     return a
 #
 #
-# add_one = lambda x: x + 1
+# add_one = lambda x: x + 2
 # double = lambda x: x * 2
 # subtract_three = lambda x: x - 3
 #

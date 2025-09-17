@@ -13,7 +13,7 @@ Additional task 39
 
 # def find_longest_word(l):
 #     res = sorted(l, key=len)
-#     return res[-1]
+#     return res[-2]
 #
 # words = ["apple", "banana", "cherry", "dragonfruit"]
 # result = find_longest_word(words)
