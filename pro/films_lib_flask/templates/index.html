@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Головна{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- Фільми -->
+    <h2 class="section-title">Фільми</h2>
+    <a href="{{ url_for('media.add_media', media_type='movie') }}" class="btn btn-primary btn-custom">Додати фільм</a>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for movie in movies %}
+        <div class="col">
+            <div class="media-card card h-100 {% if movie.watched %}watched{% endif %}">
+                {% if movie.poster_url %}
+                <img src="{{ movie.poster_url }}" class="card-img-top" alt="{{ movie.title }}">
+                {% else %}
+                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 300px;">
+                    Немає постера
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title">{{ movie.title }}</h3>
+                    <p class="card-text">
+                        {% if movie.description %}
+                        {{ movie.description|truncate(100) }}
+                        {% else %}
+                        Немає опису
+                        {% endif %}
+                    </p>
+                    {% if movie.impressions is not none and movie.impressions|length > 0 %}
+                    <p class="impressions"><strong>Враження:</strong> {{ movie.impressions }}</p>
+                    {% endif %}
+                    <form method="POST" action="{{ url_for('media.toggle_watched', media_id=movie.id) }}" id="watched-form-{{ movie.id }}" class="watched-form">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="watched" id="watched-{{ movie.id }}" {% if movie.watched %}checked{% endif %} onchange="submitWatchedForm('{{ movie.id }}')">
+                            <label class="form-check-label" for="watched-{{ movie.id }}">Переглянуто</label>
+                        </div>
+                    </form>
+                    {% if movie.watched and movie.impressions is none %}
+                    <form method="POST" action="{{ url_for('media.save_impressions', media_id=movie.id) }}" id="impressions-form-{{ movie.id }}">
+                        <div class="mb-2">
+                            <label for="impressions-{{ movie.id }}" class="form-label">Враження:</label>
+                            <textarea class="form-control" name="impressions" id="impressions-{{ movie.id }}" rows="3">{{ movie.impressions or '' }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-custom" onclick="return confirm('Зберегти враження?')">Зберегти</button>
+                    </form>
+                    {% endif %}
+                    {% if movie.impressions is not none %}
+                    <a href="{{ url_for('media.edit_review', media_id=movie.id) }}" class="btn btn-secondary btn-custom">Редагувати враження</a>
+                    {% endif %}
+                    <a href="{{ url_for('media.delete_media', media_id=movie.id) }}" class="btn btn-danger btn-custom" onclick="return confirm('Видалити?')">Видалити</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Серіали -->
+    <h2 class="section-title mt-5">Серіали</h2>
+    <a href="{{ url_for('media.add_media', media_type='series') }}" class="btn btn-primary btn-custom">Додати серіал</a>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for series in series %}
+        <div class="col">
+            <div class="media-card card h-100 {% if series.watched %}watched{% endif %}">
+                {% if series.poster_url %}
+                <img src="{{ series.poster_url }}" class="card-img-top" alt="{{ series.title }}">
+                {% else %}
+                <div class="card-img-top bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 300px;">
+                    Немає постера
+                </div>
+                {% endif %}
+                <div class="card-body">
+                    <h3 class="card-title">{{ series.title }}</h3>
+                    <p class="card-text">
+                        {% if series.description %}
+                        {{ series.description|truncate(100) }}
+                        {% else %}
+                        Немає опису
+                        {% endif %}
+                    </p>
+                    {% if series.impressions is not none and series.impressions|length > 0 %}
+                    <p class="impressions"><strong>Враження:</strong> {{ series.impressions }}</p>
+                    {% endif %}
+                    <form method="POST" action="{{ url_for('media.toggle_watched', media_id=series.id) }}" id="watched-form-{{ series.id }}" class="watched-form">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="watched" id="watched-{{ series.id }}" {% if series.watched %}checked{% endif %} onchange="submitWatchedForm('{{ series.id }}')">
+                            <label class="form-check-label" for="watched-{{ series.id }}">Переглянуто</label>
+                        </div>
+                    </form>
+                    {% if series.watched and series.impressions is none %}
+                    <form method="POST" action="{{ url_for('media.save_impressions', media_id=series.id) }}" id="impressions-form-{{ series.id }}">
+                        <div class="mb-2">
+                            <label for="impressions-{{ series.id }}" class="form-label">Враження:</label>
+                            <textarea class="form-control" name="impressions" id="impressions-{{ series.id }}" rows="3">{{ series.impressions or '' }}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-custom" onclick="return confirm('Зберегти враження?')">Зберегти</button>
+                    </form>
+                    {% endif %}
+                    {% if series.impressions is not none %}
+                    <a href="{{ url_for('media.edit_review', media_id=series.id) }}" class="btn btn-secondary btn-custom">Редагувати враження</a>
+                    {% endif %}
+                    <a href="{{ url_for('media.delete_media', media_id=series.id) }}" class="btn btn-danger btn-custom" onclick="return confirm('Видалити?')">Видалити</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    function submitWatchedForm(formId) {
+        console.log('Submitting form for media_id: ' + formId); // Дебаг
+        const form = document.getElementById('watched-form-' + formId);
+        if (form) {
+            setTimeout(() => form.submit(), 100); // Затримка для UX
+        } else {
+            console.error('Form not found for media_id: ' + formId);
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Додати {{ 'фільм' if media_type == 'movie' else 'серіал' }}{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="section-title">Додати {{ 'фільм' if media_type == 'movie' else 'серіал' }}</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.title.label(class="form-label") }}
+                        {{ form.title(class="form-control") }}
+                    </div>
+                    {{ form.type() }}
+                    <button type="submit" class="btn btn-primary btn-custom">Додати</button>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-secondary btn-custom">Назад</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

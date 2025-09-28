@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+nav {
+    background: #333;
+    color: white;
+    padding: 10px;
+}
+nav a {
+    color: white;
+    margin-right: 10px;
+    text-decoration: none;
+}
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.column {
+    flex: 50%;
+    padding: 10px;
+    background: white;
+    margin: 10px;
+    border: 1px solid #ddd;
+}
+.media-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+textarea {
+    width: 100%;
+    height: 100px;
+}
+.messages p.success {
+    color: green;
+}
+.messages p.warning {
+    color: orange;
+}
+.error {
+    color: red;
+}
+a {
+    color: blue;
+    margin-right: 10px;
+}

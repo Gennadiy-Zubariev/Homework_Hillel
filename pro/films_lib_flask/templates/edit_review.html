@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Редагувати враження{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="section-title">Редагувати враження для "{{ media.title }}"</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.impressions.label(class="form-label") }}
+                        {{ form.impressions(class="form-control", rows=4) }}
+                        <small class="form-text text-muted">Залиште поле порожнім, щоб зберегти без вражень.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-custom">Зберегти</button>
+                    <a href="{{ url_for('main.index') }}" class="btn btn-secondary btn-custom">Назад</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
