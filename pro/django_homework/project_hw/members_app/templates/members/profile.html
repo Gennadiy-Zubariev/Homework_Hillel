@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Профіль: {{ profile.user.username }}</h1>
+    <form method="post" action="{% url 'profile' %}">
+        {% csrf_token %}
+        <p>ПІБ: {{ profile.full_name }}</p>
+        <p>Дата народження: {{ profile.birth_date }}</p>
+    </form>
+    <h2>Обрані курси:</h2>
+    <ul>
+        {% for course in current %}
+            <li>{{ course.title }}</li>
+        {% empty %}
+            <li>Немає курсів</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

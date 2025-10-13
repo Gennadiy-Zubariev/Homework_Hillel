@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Список курсів</h1>
+    <ul>
+        {% for course in courses %}
+            <li>
+                {% if course.image %}
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}" width="100">
+                {% endif %}
+                <h3><a href="{% url 'course_detail' course.pk %}">{{ course.title }}</a></h3>
+                <p>{{ course.short_description }}</p>
+            </li>
+        {% empty %}
+            <li>Немає курсів</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
