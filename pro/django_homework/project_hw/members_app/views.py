@@ -28,7 +28,7 @@ def profile(request):
             'birth_date': '2000-01-01'
         }
     )
-    current = request.user.current_courses.all()
+    current = request.user.current_users.all()
     return render(request, 'members/profile.html', {'profile': profile, 'current': current})
 
 
