@@ -1,5 +1,5 @@
 from django.contrib.auth import login, logout
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from courses_app.models import Courses
 from members_app.models import Members
 from django.contrib.auth.decorators import login_required
@@ -25,17 +25,18 @@ def profile(request):
         user=request.user,
         defaults={
             'full_name': request.user.username,
-            'birth_date': '2000-01-01'
         }
     )
-    current = request.user.current_users.all()
+    current = profile.courses.all()
     return render(request, 'members/profile.html', {'profile': profile, 'current': current})
 
 
 @login_required
 def current(request, course_id):
-    course = Courses.objects.get(id=course_id)
-    course.current_users.remove(request.user)
+    course = get_object_or_404(Courses, pk=course_id)
+    profile = request.user.profile #Members
+    if course in profile.courses.all(): #Members.courses.all()
+        profile.courses.remove(course)
     return redirect('profile')
 
 
