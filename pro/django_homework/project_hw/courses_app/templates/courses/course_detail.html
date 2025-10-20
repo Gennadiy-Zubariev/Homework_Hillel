@@ -4,10 +4,23 @@
     {% if course.image %}
         <img src="{{ course.image.url }}" alt="{{ course.title }}" width="200">
     {% endif %}
+    <li>
+    <a href="{% url 'edit_course' course.pk %}" class="btn btn-primary">Редагувати курс</a>
+    </li>
+    <br>
+    <li>
+    <a href="{% url 'delete_course' course.pk %}" class="btn btn-danger">Видалити курс</a>
+    </li>
+    <p><strong>Дата початку:</strong> {{ course.start_date|date:"d.m.Y" }}</p>
+    <p><strong>Дата завершення:</strong> {{ course.end_date|date:"d.m.Y" }}</p>
     <p>{{ course.program }}</p>
     <form method="post">
         {% csrf_token %}
-        <button type="submit">Записатись на курс</button>
+        {% if request.user.profile in course.members.all %}
+            <button type="submit" class="btn btn-danger" name="action" value="remove">Відмовитись від курсу</button>
+        {% else %}
+            <button type="submit" class="btn btn-success" name="action" value="add">Записатись на курс</button>
+        {% endif %}
     </form>
     <h2>Записані користувачі:</h2>
     <ul>
