@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses_app.apps.CoursesAppConfig',
     'members_app.apps.MembersAppConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +121,8 @@ LOGIN_URL = '/members/login/'  # Куди перенаправляти, якщо
 LOGIN_REDIRECT_URL = '/members/profile/'  # Куди перенаправляти після успішного логіну
 LOGOUT_REDIRECT_URL = '/members/login/'  # Куди перенаправляти після виходу
 
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_PASSWORD_VALIDATORS = []
+
+AUTH_USER_MODEL = 'accounts.MembersUser'
