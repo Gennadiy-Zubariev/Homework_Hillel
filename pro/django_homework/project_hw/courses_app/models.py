@@ -14,5 +14,6 @@ class Courses(models.Model):
     end_date = models.DateField(verbose_name='Дата завершення')
     c_owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_courses')
 
+
     def __str__(self):
         return self.title
