@@ -4,19 +4,17 @@
     {% if course.image %}
         <img src="{{ course.image.url }}" alt="{{ course.title }}" width="200">
     {% endif %}
-    <li>
-    <a href="{% url 'edit_course' course.pk %}" class="btn btn-primary">Редагувати курс</a>
-    </li>
-    <br>
-    <li>
-    <a href="{% url 'delete_course' course.pk %}" class="btn btn-danger">Видалити курс</a>
-    </li>
+    {% if user == course.c_owner %}
+        <a href="{% url 'edit_course' course.pk %}" class="btn btn-primary">Редагувати курс</a>
+        <a href="{% url 'delete_course' course.pk %}" class="btn btn-danger">Видалити курс</a>
+    {% endif %}
+    <p>Власник: {{ course.c_owner }}</p>
     <p><strong>Дата початку:</strong> {{ course.start_date|date:"d.m.Y" }}</p>
     <p><strong>Дата завершення:</strong> {{ course.end_date|date:"d.m.Y" }}</p>
     <p>{{ course.program }}</p>
     <form method="post">
         {% csrf_token %}
-        {% if request.user.profile in course.members.all %}
+        {% if is_enrolled %}
             <button type="submit" class="btn btn-danger" name="action" value="remove">Відмовитись від курсу</button>
         {% else %}
             <button type="submit" class="btn btn-success" name="action" value="add">Записатись на курс</button>
@@ -24,8 +22,8 @@
     </form>
     <h2>Записані користувачі:</h2>
     <ul>
-        {% for user in current_users %}
-            <li>{{ user.user.username }} ({{ user.full_name }})</li>
+        {% for member in current_users %}
+            <li>{{ member.m_user.full_name |default:member.m_user.email }}</li>
         {% empty %}
             <li>Ще ніхто не записався</li>
         {% endfor %}

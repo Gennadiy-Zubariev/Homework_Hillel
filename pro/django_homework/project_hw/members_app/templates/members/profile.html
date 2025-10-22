@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Профіль: {{ profile.user.username }}</h1>
-    <form method="post" action="{% url 'profile' %}">
-        {% csrf_token %}
-        <p>ПІБ: {{ profile.full_name }}</p>
-        <p>Дата народження: {{ profile.birth_date }}</p>
-    </form>
+    <h1>Профіль: {{ profile.m_user.first_name }} {{ profile.m_user.last_name }}</h1>
+    <div>
+        <p><strong>Email:</strong> {{ profile.m_user.email }}</p>
+        <p><strong>Прізвище та ім'я:</strong> {{ profile.m_user.full_name }}</p>
+        <p><strong>Дата народження:</strong> {{ profile.m_user.date_of_birth|date:"d.m.Y"|default:"Не вказано" }}</p>
+        <p><strong>Номер телефону:</strong> {{ profile.m_user.phone_number }}</p>
+        {% if profile.m_user.profile_picture %}
+            <p><strong>Фото профілю:</strong></p>
+            <img src="{{ profile.m_user.profile_picture.url }}" alt="Profile Picture" style="max-width: 200px;">
+        {% endif %}
+    </div>
     <h2>Обрані курси:</h2>
     <ul>
         {% for course in current %}
-            <li>{{ course.title }}</li>
+            <li>
+                {{ course.title }}
+                <a href="{% url 'current' course.id %}">Відписатися</a>
+            </li>
         {% empty %}
             <li>Немає курсів</li>
         {% endfor %}

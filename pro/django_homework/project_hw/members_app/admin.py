@@ -4,4 +4,24 @@ from members_app.models import Members
 
 @admin.register(Members)
 class MembersAdmin(admin.ModelAdmin):
-    list_display = ['full_name', 'birth_date']
+    list_display = ['user_email', 'user_full_name', 'user_birth_date', 'courses_count']
+
+    def user_email(self, obj):
+        return obj.user.email
+
+    user_email.short_description = 'Email'
+
+    def user_full_name(self, obj):
+        return obj.user.full_name or 'Не вказано'
+
+    user_full_name.short_description = "Прізвище та ім'я"
+
+    def user_birth_date(self, obj):
+        return obj.user.date_of_birth or 'Не вказано'
+
+    user_birth_date.short_description = 'Дата народження'
+
+    def courses_count(self, obj):
+        return obj.courses.count()
+
+    courses_count.short_description = 'Кількість курсів'

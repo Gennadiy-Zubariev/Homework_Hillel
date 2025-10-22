@@ -21,22 +21,17 @@ def register(request):
 
 @login_required
 def profile(request):
-    profile, created = Members.objects.get_or_create(
-        user=request.user,
-        defaults={
-            'full_name': request.user.username,
-        }
-    )
-    current = profile.courses.all()
+    profile, created = Members.objects.get_or_create(m_user=request.user)
+    current = profile.m_courses.all()
     return render(request, 'members/profile.html', {'profile': profile, 'current': current})
 
 
 @login_required
 def current(request, course_id):
     course = get_object_or_404(Courses, pk=course_id)
-    profile = request.user.profile #Members
-    if course in profile.courses.all(): #Members.courses.all()
-        profile.courses.remove(course)
+    profile, created = Members.objects.get_or_create(m_user=request.user)
+    if profile.m_courses.filter(pk=course.pk).exists():
+        profile.m_courses.remove(course)
     return redirect('profile')
 
 

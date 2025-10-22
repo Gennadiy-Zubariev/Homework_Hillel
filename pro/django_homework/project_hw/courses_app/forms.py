@@ -7,7 +7,7 @@ from courses_app.models import Courses
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Courses
-        fields = ['title', 'description', 'program', 'start_date', 'end_date', 'image',]
+        fields = ['title', 'description', 'program', 'start_date', 'end_date', 'image', ]
 
         error_messages = {
             'title': {
@@ -34,7 +34,6 @@ class CourseForm(forms.ModelForm):
         if title and start_date and end_date:
             title_lower = title.lower()
             existing_courses = Courses.objects.filter(start_date=start_date, end_date=end_date)
-
 
             if self.instance.pk:
                 existing_courses = existing_courses.exclude(pk=self.instance.pk)

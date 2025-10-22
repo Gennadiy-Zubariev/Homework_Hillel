@@ -4,7 +4,7 @@
     <h1>Список курсів</h1>
     <br>
     {% if user.is_authenticated %}
-    <a href="{% url 'add_course' %}" class="btn btn-primary" >Додати курс</a>
+        <a href="{% url 'add_course' %}" class="btn btn-primary">Додати курс</a>
     {% endif %}
     <br><br>
     <ul>
@@ -17,7 +17,8 @@
                 <br><br>
                 Початок: {{ course.start_date|date:"d.m.Y" }} |
                 Завершення: {{ course.end_date|date:"d.m.Y" }}
-                <p>{{ course.description }}</p>
+                <p>Власник: {{ course.c_owner }}</p>
+                <p>Опис: {{ course.description }}</p>
             </li>
         {% empty %}
             <li>Немає курсів</li>
