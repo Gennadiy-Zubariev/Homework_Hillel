@@ -12,7 +12,10 @@ class CourseForm(forms.ModelForm):
         error_messages = {
             'title': {
                 'required': 'Це поле обов\'язкове',
-            }
+            },
+            'description': {
+                'max_length': 'Опис не може бути більше 600 символів!'
+            },
         }
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Введіть назву курсу', 'class': 'form-control'}),
