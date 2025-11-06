@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses_app.apps.CoursesAppConfig',
     'members_app.apps.MembersAppConfig',
-    'accounts.apps.AccountsConfig',
+    'accounts_app.apps.AccountsConfig',
+    'teachers_app.apps.TeachersAppConfig',
 ]
 
 MIDDLEWARE = [
@@ -129,4 +130,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_PASSWORD_VALIDATORS = []
 
-AUTH_USER_MODEL = 'accounts.MembersUser'
+AUTH_USER_MODEL = 'accounts_app.MembersUser'
