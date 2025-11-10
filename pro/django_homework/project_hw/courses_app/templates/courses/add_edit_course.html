@@ -36,12 +36,15 @@
                         <a href="{% url 'teacher_detail' teacher.pk %}">{{ teacher.full_teacher_name }}</a>
                         {% if teacher.specialties %}( {{ teacher.specialties }} ){% endif %}
 
-                        <form method="post" style="display: inline;" class="ms-2">
-                            {% csrf_token %}
-                            <input type="hidden" name="action" value="remove_teacher">
+                        <button type="submit"
+                                name="action"
+                                value="remove_teacher"
+                                class="btn btn-danger btn-sm ms-2"
+                                formaction="{% url 'edit_course' course.pk %}"
+                                formmethod="post">
                             <input type="hidden" name="teacher_id" value="{{ teacher.pk }}">
-                            <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
-                        </form>
+                            Видалити
+                        </button>
                     </li>
                 {% endfor %}
             </ul>
@@ -80,17 +83,20 @@
         {% endif %}
     {% endif %}
 
+
+
     <div class="mb-3">
-        {{ form.teacher_to_add.label_tag }}
-        {{ form.teacher_to_add }}
-
-        {% if form.teacher_to_add.errors %}
-            <div class="invalid-feedback d-block">
-                {{ form.teacher_to_add.errors|join:", " }}
-            </div>
-        {% endif %}
-
-        <button type="submit" name="action" value="add_teacher" class="btn btn-info btn-sm ms-2">Додати викладача</button>
+        <label for="teacher_to_add" class="form-label">Додати викладача</label>
+        <div class="d-flex align-items-center gap-2">
+            <select name="teacher_to_add" id="teacher_to_add" class="form-select">
+                <option value="">-- Оберіть викладача --</option>
+                {% for teacher in all_teachers %}
+                    <option value="{{ teacher.pk }}">{{ teacher.full_teacher_name }}</option>
+                {% endfor %}
+            </select>
+            <a href="{% url 'add_teacher' %}" class="btn btn-outline-primary">+ Новий викладач</a>
+            <button type="submit" name="action" value="add_teacher" class="btn btn-info">Додати</button>
+        </div>
     </div>
 
     <div class="mb-3">
@@ -126,6 +132,7 @@
     </div>
 
     <button type="submit" class="btn btn-success" name="action" value="save">Зберегти</button>
-    <a href="{% url 'courses_list' %}" class="btn btn-secondary ms-2">Скасувати</a>
+    <button type="submit" class="btn btn-secondary ms-2" name="action" value="cancel">Скасувати</button>
+{#    <a href="{% url 'courses_list' %}" class="btn btn-secondary ms-2">Скасувати</a>#}
 </form>
 {% endblock %}

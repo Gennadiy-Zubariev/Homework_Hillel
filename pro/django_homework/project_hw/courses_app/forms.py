@@ -6,7 +6,6 @@ from courses_app.models import Courses
 from teachers_app.models import Teacher
 
 
-
 class CourseForm(forms.ModelForm):
     teacher_to_add = forms.ModelChoiceField(
         queryset=Teacher.objects.all().order_by('full_teacher_name'),
@@ -15,6 +14,7 @@ class CourseForm(forms.ModelForm):
         help_text='Після вибору натисніть "Додати викладача".',
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
     class Meta:
         model = Courses
         fields = ['title', 'description', 'program', 'start_date', 'end_date', 'image']
@@ -42,14 +42,11 @@ class CourseForm(forms.ModelForm):
         start_date = cleaned_data.get('start_date')
         end_date = cleaned_data.get('end_date')
 
-
-
         if start_date and end_date and end_date < start_date:
             raise ValidationError("Дата завершення не може бути раніше дати початку!")
 
         if start_date < datetime.now().date():
             raise ValidationError("Дата початку не може бути у минулому!")
-
 
         if title and start_date and end_date:
             title_lower = title.lower()
@@ -63,4 +60,3 @@ class CourseForm(forms.ModelForm):
                     raise ValidationError('Курс з такою назвою та датами початку/кінця вже існує!')
 
         return cleaned_data
-

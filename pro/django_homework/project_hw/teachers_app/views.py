@@ -1,11 +1,10 @@
-from django.views.generic import  CreateView
+from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from teachers_app.models import Teacher
 from teachers_app.forms import TeacherForm
-from courses_app.forms import Courses
 
 
 @login_required

@@ -16,8 +16,5 @@ class Courses(models.Model):
     c_owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_courses')
     c_teachers = models.ManyToManyField(Teacher, related_name='rn_courses', verbose_name='Викладачі')
 
-
     def __str__(self):
         return self.title
-
-

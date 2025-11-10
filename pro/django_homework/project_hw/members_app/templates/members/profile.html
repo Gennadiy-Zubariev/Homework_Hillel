@@ -16,7 +16,7 @@
         {% for course in current %}
             <li>
                 {{ course.title }}
-                <a href="{% url 'current' course.id %}">Відписатися</a>
+                <a href="{% url 'unenroll' course_id=course.pk %}">Відписатися</a>
             </li>
         {% empty %}
             <li>Немає курсів</li>
