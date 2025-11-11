@@ -1,19 +1,24 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import  get_object_or_404
 from django.contrib import messages
 from teachers_app.models import Teacher
 from teachers_app.forms import TeacherForm
 
+class TeacherDetailView(LoginRequiredMixin, DetailView):
+    model = Teacher
+    template_name = 'teachers/teacher_detail.html'
+    context_object_name = 'teacher'
 
-@login_required
-def teacher_detail(request, pk):
-    teacher = get_object_or_404(Teacher, pk=pk)
-    courses = teacher.rn_courses.all()
+    def get_object(self, queryset = None):
+        return get_object_or_404(Teacher, pk=self.kwargs['pk'])
 
-    return render(request, 'teachers/teacher_detail.html', {'teacher': teacher, 'courses': courses})
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        teacher = self.get_object()
+        context['courses'] = teacher.rn_courses.all()
+        return context
 
 
 class AddTeacherView(LoginRequiredMixin, CreateView):
@@ -33,10 +38,21 @@ class AddTeacherView(LoginRequiredMixin, CreateView):
         return context
 
     def form_valid(self, form):
-        instance = form.save(commit=False)
-        instance.t_user = self.request.user
-        instance.save()
+        form.instance.t_user = self.request.user
+        response = super().form_valid(form)
         messages.success(self.request, f'Викладача {form.instance.full_teacher_name} створено')
-        return super().form_valid(form)
+        return response
 
 
+class DeleteTeacherView(LoginRequiredMixin, DeleteView):
+    model = Teacher
+    template_name = 'teachers/teacher_confirm_delete.html'
+    success_url = reverse_lazy('courses_list')
+    context_object_name = 'teacher'
+
+    def get_queryset(self):
+        return Teacher.objects.all()
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Курс видалено!')
+        return super().delete(request, *args, **kwargs)

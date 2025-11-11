@@ -31,6 +31,10 @@
                 {% endif %}
             </div>
         </div>
+
+    {% if user == teacher.t_user %}
+        <a href="{% url 'delete_teacher' teacher.pk %}" class="btn btn-danger">Видалити вчителя</a>
+    {% endif %}
         
         <a href="{% url 'courses_list' %}" class="btn btn-secondary mt-3">Повернутися до курсів</a>
     </div>

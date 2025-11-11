@@ -38,9 +38,8 @@ def log_course_delete(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Teacher)
 def log_teacher_save(sender, instance, created, **kwargs):
-    action = 'create' if created else 'update'
     ActionLog.objects.create(
-        action_type=action,
+        action_type='create',
         user=instance.t_user,
         content_object=instance,
         description=f'{"Створено" if created else "Оновлено"} викладача "{instance.full_teacher_name}"'
@@ -51,9 +50,9 @@ def log_teacher_save(sender, instance, created, **kwargs):
 def log_teacher_delete(sender, instance, **kwargs):
     ActionLog.objects.create(
         action_type='delete',
-        user=None,
-        content_type_id=None,
-        object_id=None,
+        user=instance.t_user,
+        content_type_id=instance,
+        object_id=instance.pk,
         description=f'Видалено викладача "{instance.full_teacher_name}" (ID: {instance.pk})'
     )
 
