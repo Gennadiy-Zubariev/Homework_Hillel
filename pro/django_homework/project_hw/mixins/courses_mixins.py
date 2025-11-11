@@ -1,6 +1,7 @@
 from courses_app.forms import CourseForm
 from teachers_app.models import Teacher
 
+
 class OwnerRequiredMixin:
 
     def get_queryset(self):
@@ -27,6 +28,7 @@ class CourseCreateContextDataMixin:
         context['draft_teachers'] = draft_teachers
         return context
 
+
 class CourseUpdateContextDataMixin:
 
     def get_context_data(self, **kwargs):
@@ -38,6 +40,7 @@ class CourseUpdateContextDataMixin:
             pk__in=self.request.session.get(session_key, [])).order_by('full_teacher_name')
         context['all_teachers'] = Teacher.objects.all().order_by('full_teacher_name')
         return context
+
 
 class CourseDetailContextDataMixin:
 
@@ -53,4 +56,3 @@ class CourseDetailContextDataMixin:
             context['is_enrolled'] = False
 
         return context
-

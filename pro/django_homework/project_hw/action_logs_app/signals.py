@@ -7,6 +7,7 @@ from teachers_app.models import Teacher
 from accounts_app.models import MembersUser
 from action_logs_app.models import ActionLog
 
+
 @receiver(post_save, sender=Courses)
 def log_course_save(sender, instance, created, **kwargs):
     # Пропускаємо, якщо це проміжне збереження (raw=True при fixtures)
@@ -22,7 +23,6 @@ def log_course_save(sender, instance, created, **kwargs):
         content_object=instance,
         description=f'{"Створено" if created else "Оновлено"} курс "{instance.title}"'
     )
-
 
 
 @receiver(post_delete, sender=Courses)

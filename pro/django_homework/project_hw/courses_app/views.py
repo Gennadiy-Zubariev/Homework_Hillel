@@ -29,19 +29,6 @@ class CourseDetailView(LoginRequiredMixin, CourseDetailContextDataMixin, DetailV
     template_name = 'courses/course_detail.html'
     context_object_name = 'course'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     course = self.get_object()
-    #
-    #     context['current_users'] = course.rn_members.all()
-    #     user = self.request.user
-    #     if user.is_authenticated:
-    #         context['is_enrolled'] = course.rn_members.filter(m_user=user).exists()
-    #     else:
-    #         context['is_enrolled'] = False
-    #
-    #     return context
-
     def post(self, request, *args, **kwargs):
         course = self.get_object()
         user = self.request.user
@@ -73,23 +60,6 @@ class CourseCreateView(LoginRequiredMixin, CourseCreateContextDataMixin, CreateV
     form_class = CourseForm
     template_name = 'courses/add_edit_course.html'
     success_url = reverse_lazy('courses_list')
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     request = self.request
-    #
-    #     draft_course_data = request.session.get('draft_course_data', {})
-    #     if draft_course_data:
-    #         context['form'] = CourseForm(initial=draft_course_data)
-    #     else:
-    #         context['form'] = CourseForm()
-    #
-    #     draft_teachers_pks = request.session.get('draft_teachers', [])
-    #     draft_teachers = Teacher.objects.filter(pk__in=draft_teachers_pks).order_by('full_teacher_name')
-    #
-    #     context['all_teachers'] = Teacher.objects.all().order_by('full_teacher_name')
-    #     context['draft_teachers'] = draft_teachers
-    #     return context
 
     def post(self, request, *args, **kwargs):
         action = request.POST.get('action')
@@ -162,21 +132,8 @@ class CourseUpdateView(LoginRequiredMixin, OwnerRequiredMixin, CourseUpdateConte
     template_name = 'courses/add_edit_course.html'
     success_url = reverse_lazy('courses_list')
 
-    # def get_queryset(self):
-    #     return Courses.objects.filter(c_owner=self.request.user)
-
     def get_success_url(self):
         return reverse_lazy('course_detail', kwargs={'pk': self.object.pk})
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     pk = self.kwargs.get('pk')
-    #     session_key = f'edit_draft_teachers_{pk}'
-    #     context['course'] = self.object
-    #     context['edit_draft_teachers'] = Teacher.objects.filter(
-    #         pk__in=self.request.session.get(session_key, [])).order_by('full_teacher_name')
-    #     context['all_teachers'] = Teacher.objects.all().order_by('full_teacher_name')
-    #     return context
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -235,9 +192,6 @@ class CourseDeleteView(LoginRequiredMixin, OwnerRequiredMixin, DeleteView):
     template_name = 'courses/course_confirm_delete.html'
     success_url = reverse_lazy('courses_list')
     context_object_name = 'course'
-
-    # def get_queryset(self):
-    #     return Courses.objects.filter(c_owner=self.request.user)
 
     def delete(self, request, *args, **kwargs):
         course = self.get_object()

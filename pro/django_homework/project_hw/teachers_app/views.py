@@ -1,7 +1,6 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import  get_object_or_404
 from django.contrib import messages
 from teachers_app.models import Teacher
 from teachers_app.forms import TeacherForm
@@ -10,19 +9,11 @@ from mixins.teacher_mixins import (
     TeacherDetailGetObjectsMixin,
     TeacherDeleteGetQuerySetMixin)
 
+
 class TeacherDetailView(LoginRequiredMixin, TeacherContextMixin, TeacherDetailGetObjectsMixin, DetailView):
     model = Teacher
     template_name = 'teachers/teacher_detail.html'
     context_object_name = 'teacher'
-
-    # def get_object(self, queryset = None):
-    #     return get_object_or_404(Teacher, pk=self.kwargs['pk'])
-
-    # def get_context_data(self,**kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     teacher = self.get_object()
-    #     context['courses'] = teacher.rn_courses.all()
-    #     return context
 
 
 class AddTeacherView(LoginRequiredMixin, TeacherContextMixin, CreateView):
@@ -36,11 +27,6 @@ class AddTeacherView(LoginRequiredMixin, TeacherContextMixin, CreateView):
             return next_url
         return reverse_lazy('courses_list')
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['next'] = self.request.GET.get('next', '')
-    #     return context
-
     def form_valid(self, form):
         form.instance.t_user = self.request.user
         response = super().form_valid(form)
@@ -53,9 +39,6 @@ class DeleteTeacherView(LoginRequiredMixin, TeacherDeleteGetQuerySetMixin, Delet
     template_name = 'teachers/teacher_confirm_delete.html'
     success_url = reverse_lazy('courses_list')
     context_object_name = 'teacher'
-
-    # def get_queryset(self):
-    #     return Teacher.objects.all()
 
     def delete(self, request, *args, **kwargs):
         messages.success(request, 'Курс видалено!')

@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404
 from teachers_app.models import Teacher
 
 
-
 class TeacherContextMixin:
 
     def get_context_data(self, **kwargs):
@@ -19,11 +18,12 @@ class TeacherContextMixin:
 
         return context
 
+
 class TeacherDetailGetObjectsMixin:
-    def get_object(self, queryset = None):
+    def get_object(self, queryset=None):
         return get_object_or_404(Teacher, pk=self.kwargs['pk'])
+
 
 class TeacherDeleteGetQuerySetMixin:
     def get_queryset(self):
         return Teacher.objects.all()
-
