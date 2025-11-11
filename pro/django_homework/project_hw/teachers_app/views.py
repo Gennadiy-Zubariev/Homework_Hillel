@@ -5,23 +5,27 @@ from django.shortcuts import  get_object_or_404
 from django.contrib import messages
 from teachers_app.models import Teacher
 from teachers_app.forms import TeacherForm
+from mixins.teacher_mixins import (
+    TeacherContextMixin,
+    TeacherDetailGetObjectsMixin,
+    TeacherDeleteGetQuerySetMixin)
 
-class TeacherDetailView(LoginRequiredMixin, DetailView):
+class TeacherDetailView(LoginRequiredMixin, TeacherContextMixin, TeacherDetailGetObjectsMixin, DetailView):
     model = Teacher
     template_name = 'teachers/teacher_detail.html'
     context_object_name = 'teacher'
 
-    def get_object(self, queryset = None):
-        return get_object_or_404(Teacher, pk=self.kwargs['pk'])
+    # def get_object(self, queryset = None):
+    #     return get_object_or_404(Teacher, pk=self.kwargs['pk'])
 
-    def get_context_data(self,**kwargs):
-        context = super().get_context_data(**kwargs)
-        teacher = self.get_object()
-        context['courses'] = teacher.rn_courses.all()
-        return context
+    # def get_context_data(self,**kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     teacher = self.get_object()
+    #     context['courses'] = teacher.rn_courses.all()
+    #     return context
 
 
-class AddTeacherView(LoginRequiredMixin, CreateView):
+class AddTeacherView(LoginRequiredMixin, TeacherContextMixin, CreateView):
     model = Teacher
     form_class = TeacherForm
     template_name = 'teachers/add_edit_teacher.html'
@@ -32,10 +36,10 @@ class AddTeacherView(LoginRequiredMixin, CreateView):
             return next_url
         return reverse_lazy('courses_list')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['next'] = self.request.GET.get('next', '')
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['next'] = self.request.GET.get('next', '')
+    #     return context
 
     def form_valid(self, form):
         form.instance.t_user = self.request.user
@@ -44,14 +48,14 @@ class AddTeacherView(LoginRequiredMixin, CreateView):
         return response
 
 
-class DeleteTeacherView(LoginRequiredMixin, DeleteView):
+class DeleteTeacherView(LoginRequiredMixin, TeacherDeleteGetQuerySetMixin, DeleteView):
     model = Teacher
     template_name = 'teachers/teacher_confirm_delete.html'
     success_url = reverse_lazy('courses_list')
     context_object_name = 'teacher'
 
-    def get_queryset(self):
-        return Teacher.objects.all()
+    # def get_queryset(self):
+    #     return Teacher.objects.all()
 
     def delete(self, request, *args, **kwargs):
         messages.success(request, 'Курс видалено!')

@@ -27,8 +27,13 @@ class ActionLog(models.Model):
     description = models.TextField(blank=True)  # <-- додати це поле
 
 
-class Meta:
+    class Meta:
+        verbose_name = 'Лог'
+        verbose_name_plural = 'Логи'
+
         ordering = ['-timestamp']
+
+
 
 
 

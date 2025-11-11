@@ -1,4 +1,4 @@
-from django.contrib.auth import user_logged_in
+from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save, post_delete, m2m_changed
 from django.dispatch import receiver
 from courses_app.models import Courses
@@ -27,10 +27,11 @@ def log_course_save(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Courses)
 def log_course_delete(sender, instance, **kwargs):
+    content_type = ContentType.objects.get_for_model(instance)
     ActionLog.objects.create(
         action_type='delete',
         user=instance.c_owner,
-        content_type_id=instance,
+        content_type=content_type,
         object_id=instance.pk,
         description=f'Видалено курс "{instance.title}" (ID: {instance.pk})'
     )
@@ -48,10 +49,11 @@ def log_teacher_save(sender, instance, created, **kwargs):
 
 @receiver(post_delete, sender=Teacher)
 def log_teacher_delete(sender, instance, **kwargs):
+    content_type = ContentType.objects.get_for_model(instance)
     ActionLog.objects.create(
         action_type='delete',
         user=instance.t_user,
-        content_type_id=instance,
+        content_type=content_type,
         object_id=instance.pk,
         description=f'Видалено викладача "{instance.full_teacher_name}" (ID: {instance.pk})'
     )

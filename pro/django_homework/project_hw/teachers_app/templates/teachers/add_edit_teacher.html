@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>{% if form.instance.pk %}Редагувати викладача{% else %}Додати викладача{% endif %}</h1>
+    <h1>Додати викладача</h1>
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}

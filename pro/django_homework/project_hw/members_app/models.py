@@ -15,3 +15,7 @@ class Members(models.Model):
 
     def __str__(self):
         return self.m_user.email
+
+    class Meta:
+        verbose_name = 'Учасник'
+        verbose_name_plural = 'Учасники'
