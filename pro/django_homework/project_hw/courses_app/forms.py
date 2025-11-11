@@ -1,13 +1,23 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from datetime import datetime
 
 from courses_app.models import Courses
+from teachers_app.models import Teacher
 
 
 class CourseForm(forms.ModelForm):
+    teacher_to_add = forms.ModelChoiceField(
+        queryset=Teacher.objects.all().order_by('full_teacher_name'),
+        required=False,
+        label='Оберіть викладача для додавання',
+        help_text='Після вибору натисніть "Додати викладача".',
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
     class Meta:
         model = Courses
-        fields = ['title', 'description', 'program', 'start_date', 'end_date', 'image', ]
+        fields = ['title', 'description', 'program', 'start_date', 'end_date', 'image']
 
         error_messages = {
             'title': {
@@ -21,8 +31,9 @@ class CourseForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'placeholder': 'Введіть назву курсу', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'placeholder': 'Введіть опис курсу', 'class': 'form-control'}),
             'program': forms.Textarea(attrs={'placeholder': 'Введіть програму курсу', 'class': 'form-control'}),
-            'start_date': forms.DateInput(attrs={'type': 'date'}),
-            'end_date': forms.DateInput(attrs={'type': 'date'}),
+            'start_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'end_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
     def clean(self):
@@ -33,6 +44,9 @@ class CourseForm(forms.ModelForm):
 
         if start_date and end_date and end_date < start_date:
             raise ValidationError("Дата завершення не може бути раніше дати початку!")
+
+        if start_date < datetime.now().date():
+            raise ValidationError("Дата початку не може бути у минулому!")
 
         if title and start_date and end_date:
             title_lower = title.lower()

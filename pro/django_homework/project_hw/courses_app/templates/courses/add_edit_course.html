@@ -1,35 +1,138 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h2 class="mt-4 mb-3">{% if course %}Редагувати курс{% else %}Створити новий курс{% endif %}</h2>
+<h2 class="mt-4 mb-3">{% if form.instance.pk %}Редагувати курс{% else %}Створити новий курс{% endif %}</h2>
 
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger mb-3">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% if form.non_field_errors %}
-            <div class="alert alert-danger mb-3">
-                {{ form.non_field_errors }}
-            </div>
+    <div class="mb-3">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+        {% if form.title.errors %}
+            <div class="invalid-feedback d-block">{{ form.title.errors }}</div>
         {% endif %}
-
-        <p>{{ form.title.label_tag }}<br>{{ form.title }}</p>
+    </div>
 
     <div class="mb-3">
         {{ form.description.label_tag }}
         {{ form.description }}
         {% if form.description.errors %}
-            <div class="invalid-feedback d-block">
-                {{ form.description.errors }}
-            </div>
+            <div class="invalid-feedback d-block">{{ form.description.errors }}</div>
         {% endif %}
     </div>
 
-        <p>{{ form.program.label_tag }}<br>{{ form.program }}</p>
-        <p>{{ form.image.label_tag }}<br>{{ form.image }}</p>
-        <p>{{ form.start_date.label_tag }}<br>{{ form.start_date }}</p>
-        <p>{{ form.end_date.label_tag }}<br>{{ form.end_date }}</p>
+    {% if course %}
+        <h3 class="mt-4">Поточні викладачі:</h3>
+        {% if course.c_teachers.exists %}
+            <ul>
+                {% for teacher in course.c_teachers.all %}
+                    <li>
+                        <a href="{% url 'teacher_detail' teacher.pk %}">{{ teacher.full_teacher_name }}</a>
+                        {% if teacher.specialties %}( {{ teacher.specialties }} ){% endif %}
 
-        <button type="submit" class="btn btn-success">Зберегти</button>
-        <a href="{% url 'courses_list' %}" class="btn btn-secondary ms-2">Скасувати</a>
-    </form>
+                        <button type="submit"
+                                name="action"
+                                value="remove_teacher"
+                                class="btn btn-danger btn-sm ms-2"
+                                formaction="{% url 'edit_course' course.pk %}"
+                                formmethod="post">
+                            <input type="hidden" name="teacher_id" value="{{ teacher.pk }}">
+                            Видалити
+                        </button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Викладачі ще не призначені</p>
+        {% endif %}
+
+        {% if edit_draft_teachers %}
+            <h3 class="mt-4">Додані викладачі (черга перед збереженням):</h3>
+            <ul>
+                {% for teacher in edit_draft_teachers %}
+                    <li>
+                        <a href="{% url 'teacher_detail' teacher.pk %}">{{ teacher.full_teacher_name }}</a>
+                        {% if teacher.specialties %}( {{ teacher.specialties }} ){% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <p class="small text-muted">Всього: {{ edit_draft_teachers|length }}. Збережіть курс, щоб застосувати.</p>
+        {% else %}
+            <p>Викладачі ще не додані.</p>
+        {% endif %}
+    {% else %}
+        {% if draft_teachers %}
+            <h3 class="mt-4">Додані викладачі (черга перед збереженням):</h3>
+            <ul>
+                {% for teacher in draft_teachers %}
+                    <li>
+                        <a href="{% url 'teacher_detail' teacher.pk %}">{{ teacher.full_teacher_name }}</a>
+                        {% if teacher.specialties %}( {{ teacher.specialties }} ){% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+            <p class="small text-muted">Всього: {{ draft_teachers|length }}. Збережіть курс, щоб застосувати.</p>
+        {% else %}
+            <p>Викладачі ще не додані.</p>
+        {% endif %}
+    {% endif %}
+
+
+
+    <div class="mb-3">
+        <label for="teacher_to_add" class="form-label">Додати викладача</label>
+        <div class="d-flex align-items-center gap-2">
+            <select name="teacher_to_add" id="teacher_to_add" class="form-select">
+                <option value="">-- Оберіть викладача --</option>
+                {% for teacher in all_teachers %}
+                    <option value="{{ teacher.pk }}">{{ teacher.full_teacher_name }}</option>
+                {% endfor %}
+            </select>
+            <a href="{% url 'add_teacher' %}?next={{ request.path }}" class="btn btn-outline-primary">+ Новий викладач</a>
+            <button type="submit" name="action" value="add_teacher" class="btn btn-info">Додати</button>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form.program.label_tag }}
+        {{ form.program }}
+        {% if form.program.errors %}
+            <div class="invalid-feedback d-block">{{ form.program.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.image.label_tag }}
+        {{ form.image }}
+        {% if form.image.errors %}
+            <div class="invalid-feedback d-block">{{ form.image.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.start_date.label_tag }}
+        {{ form.start_date }}
+        {% if form.start_date.errors %}
+            <div class="invalid-feedback d-block">{{ form.start_date.errors }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        {{ form.end_date.label_tag }}
+        {{ form.end_date }}
+        {% if form.end_date.errors %}
+            <div class="invalid-feedback d-block">{{ form.end_date.errors }}</div>
+        {% endif %}
+    </div>
+
+    <button type="submit" class="btn btn-success" name="action" value="save">Зберегти</button>
+    <button type="submit" class="btn btn-secondary ms-2" name="action" value="cancel">Скасувати</button>
+{#    <a href="{% url 'courses_list' %}" class="btn btn-secondary ms-2">Скасувати</a>#}
+</form>
 {% endblock %}

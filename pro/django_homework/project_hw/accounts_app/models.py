@@ -1,4 +1,6 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.contenttypes.fields import GenericRelation
+
 from django.db import models
 from django.utils import timezone
 
@@ -41,6 +43,8 @@ class MembersUser(AbstractBaseUser, PermissionsMixin):
         ('uk', 'Ukrainian'),
         ('en', 'English'),
     ], default='uk', verbose_name='Мова')
+    logs = GenericRelation('action_logs_app.ActionLog', related_query_name='user_account')
+
 
     objects = MembersUserManager()
 
