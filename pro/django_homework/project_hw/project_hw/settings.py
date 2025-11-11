@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'members_app.apps.MembersAppConfig',
     'accounts_app.apps.AccountsConfig',
     'teachers_app.apps.TeachersAppConfig',
+    'action_logs_app.apps.AppActionLogsConfig',
 ]
 
 MIDDLEWARE = [

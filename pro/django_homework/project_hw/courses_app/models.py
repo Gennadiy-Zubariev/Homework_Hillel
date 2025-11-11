@@ -1,6 +1,7 @@
 from django.db import models
+from django.contrib.contenttypes.fields import GenericRelation
+
 from teachers_app.models import Teacher
-# from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -15,6 +16,9 @@ class Courses(models.Model):
     end_date = models.DateField(verbose_name='Дата завершення')
     c_owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rn_courses')
     c_teachers = models.ManyToManyField(Teacher, related_name='rn_courses', verbose_name='Викладачі')
+    logs = GenericRelation('action_logs_app.ActionLog', related_query_name='course')
 
     def __str__(self):
         return self.title
+
+

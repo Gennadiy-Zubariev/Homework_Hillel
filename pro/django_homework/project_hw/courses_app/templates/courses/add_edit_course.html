@@ -94,7 +94,7 @@
                     <option value="{{ teacher.pk }}">{{ teacher.full_teacher_name }}</option>
                 {% endfor %}
             </select>
-            <a href="{% url 'add_teacher' %}" class="btn btn-outline-primary">+ Новий викладач</a>
+            <a href="{% url 'add_teacher' %}?next={{ request.path }}" class="btn btn-outline-primary">+ Новий викладач</a>
             <button type="submit" name="action" value="add_teacher" class="btn btn-info">Додати</button>
         </div>
     </div>

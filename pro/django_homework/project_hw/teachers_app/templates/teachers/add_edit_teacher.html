@@ -5,7 +5,10 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
-{#        {{ form.as_p }}#}
+        {% if next_url %}
+        <input type="hidden" name="next" value="{{ next_url }}">
+        {% endif %}
+
 
         <div class="form-group">
             {{ form.full_teacher_name.label_tag }}
