@@ -31,7 +31,7 @@ class MembersUserManager(BaseUserManager):
 
 class MembersUser(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(unique=True, verbose_name='Електронна адреса', max_length=255)
-    phone_number = models.CharField(max_length=20, unique=True, verbose_name='Номер телефону')
+    phone_number = models.CharField(max_length=30, unique=True, verbose_name='Номер телефону')
     first_name = models.CharField(max_length=30, blank=True, verbose_name="Ім'я")
     last_name = models.CharField(max_length=50, blank=True, verbose_name="Прізвище")
     date_of_birth = models.DateField(null=True, blank=True, verbose_name='Дата народження')

@@ -23,8 +23,8 @@ class CoursesViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(c_owner=self.request.user)
 
-    # def get_queryset(self):
-    #     return Courses.objects.filter(c_owner=self.request.user)
+    def get_queryset(self):
+        return Courses.objects.filter(c_owner=self.request.user)
 
 
 class MembersViewSet(viewsets.ModelViewSet):
@@ -70,8 +70,8 @@ class CoursesTokenRefreshView(APIView):
             tokens = generate_jwt_token(user)
             return Response(tokens, status=status.HTTP_200_OK)
         except jwt.ExpiredSignatureError:
-            raise Response({'error': 'Token expired'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Token expired'}, status=status.HTTP_401_UNAUTHORIZED)
         except jwt.InvalidTokenError:
-            raise Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
         except User.DoesNotExist:
-            raise Response({'error': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({'error': 'User not found'}, status=status.HTTP_401_UNAUTHORIZED)
