@@ -10,7 +10,7 @@ from members_app.models import Members
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, label="Ім'я")
     last_name = forms.CharField(max_length=50, required=False, label="Прізвище")
-    phone_number = forms.CharField(max_length=20, required=True, label="Номер телефону")
+    phone_number = forms.CharField(max_length=30, required=True, label="Номер телефону")
     date_of_birth = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}),
                                     label="Дата народження")
 

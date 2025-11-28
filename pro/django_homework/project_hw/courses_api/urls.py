@@ -15,6 +15,6 @@ router.register('members', MembersViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('courses-token/', CoursesTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('courses-token/refresh/', CoursesTokenRefreshView.as_view(), name='token_refresh'),
+    path('courses-token/', CoursesTokenObtainPairView.as_view(), name='courses-token-obtain'),
+    path('courses-token/refresh/', CoursesTokenRefreshView.as_view(), name='courses-token-refresh'),
 ]

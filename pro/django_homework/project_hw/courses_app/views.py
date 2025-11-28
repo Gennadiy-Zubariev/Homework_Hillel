@@ -21,13 +21,16 @@ class CourseListView(LoginRequiredMixin, ListView):
     context_object_name = 'courses'
 
     def get_queryset(self):
-        return Courses.objects.all().order_by('c_owner')
+        return Courses.objects.all().order_by('c_owner').prefetch_related('c_owner')
 
 
 class CourseDetailView(LoginRequiredMixin, CourseDetailContextDataMixin, DetailView):
     model = Courses
     template_name = 'courses/course_detail.html'
     context_object_name = 'course'
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('c_owner')
 
     def post(self, request, *args, **kwargs):
         course = self.get_object()
